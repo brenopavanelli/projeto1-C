@@ -35,4 +35,7 @@ int main() {
     return 0;
 }
 
-dasda
+/*
+
+printf("|Número do Contrato|Tipo de Lavagem|Tipo de Veículo|Tipo de Veículo|Frequência (vezes por mês)|Valor Base|Desconto por Tipo de Veículo|Desconto Adicional|Adicionais|Valor Total|\n")
+printf("|------------------|----------------|----------------|----------------|--------------------------|-----------|----------------------------|-------------------|----------|-----------|")
