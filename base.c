@@ -20,7 +20,11 @@ int main() {
         } else if (opcao == 1){
             printf("Inserir \n");
         } else if (opcao == 2){
-            printf("Listar");
+            printf("Apresentar");
+        } else if (opcao == 3){
+            printf("Ordenar");
+        } else if (opcao == 4){
+            printf("Imprimir");
         } else {
             printf("Opcao invalida! \n");
         }
