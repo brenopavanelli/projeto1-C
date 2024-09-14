@@ -18,13 +18,13 @@ int main() {
             printf("Tchau \n");
             break;
         } else if (opcao == 1){
-            printf("Inserir \n");
+            printf("Você selecionou: Inserir mais contratos \n");
         } else if (opcao == 2){
-            printf("Apresentar");
+            printf("Você selecionou: Apresentar resultados");
         } else if (opcao == 3){
-            printf("Ordenar");
+            printf("Você selecionou: Ordenar os contratos pelo valor total");
         } else if (opcao == 4){
-            printf("Imprimir");
+            printf("Você selecionou: Imprimir registros de contratos");
         } else {
             printf("Opcao invalida! \n");
         }
