@@ -1,16 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//Contantes
 #define NUMERO_DE_CONTRATOS 10
 #define SIMPLES 60.0
 #define COMPLETA 120.0
 #define PREMIUM 180.0
 
-// VARIAVEIS
+// VARIAVEIS/VETORES
 int numero[NUMERO_DE_CONTRATOS], tipo_de_lavagem[NUMERO_DE_CONTRATOS], tipo_de_veiculo[NUMERO_DE_CONTRATOS], tamanho_do_veiculo[NUMERO_DE_CONTRATOS], frequencia[NUMERO_DE_CONTRATOS];
 float vlr_total[NUMERO_DE_CONTRATOS];
 
-
+//declarar funções
 void adicionar_contratos(int numero[], int tipo_de_lavagem[], int tipo_de_veiculo[], int tamanho_do_veiculo[], int frequencia[], float vlr_total[], int *contador);
 
 
@@ -62,9 +63,10 @@ int main() {
     return 0;
 }
 
+//função de adicionar contrato
 void adicionar_contratos(int numero[], int tipo_de_lavagem[], int tipo_de_veiculo[], int tamanho_do_veiculo[], int frequencia[], float vlr_total[], int *contador) {
     char opcao_adc;
-    
+    //Menu de inserção
     do {
     printf("\nContrato #%d\nTipo Lavagem (1-Simples, 2-Completa, 3-Premium): \n", *contador + 1);
     scanf("%d", &tipo_de_lavagem[*contador]);
@@ -81,6 +83,6 @@ void adicionar_contratos(int numero[], int tipo_de_lavagem[], int tipo_de_veicul
     puts("Deseja continuar inserindo contrato? (s/n) ");
     scanf(" %c", &opcao_adc);
     
-    (*contador)++;
+    (*contador)++; //Atuliza o numero do contrato
     } while (opcao_adc != 'n');
 }
