@@ -2,28 +2,21 @@
 #include <stdlib.h>
 
 #define NUMERO_DE_CONTRATOS 10
+#define SIMPLES 60.0
+#define COMPLETA 120.0
+#define PREMIUM 180.0
 
-// Dados que o usuário irá fornecer
-int tipo_de_lavagem[NUMERO_DE_CONTRATOS]; // (1-Simples, 2-Completa, 3-Premium)
-int tipo_de_veiculo[NUMERO_DE_CONTRATOS]; // (1-Moto, 2-Carro, 3-SUV/Van, 4-Caminhão)
-int tamanho_do_veiculo[NUMERO_DE_CONTRATOS]; // (1-Pequeno, 2-Médio, 3-Grande)
-int frequencia[NUMERO_DE_CONTRATOS];
+// VARIAVEIS
+int numero[NUMERO_DE_CONTRATOS], tipo_de_lavagem[NUMERO_DE_CONTRATOS], tipo_de_veiculo[NUMERO_DE_CONTRATOS], tamanho_do_veiculo[NUMERO_DE_CONTRATOS], frequencia[NUMERO_DE_CONTRATOS];
+float vlr_total[NUMERO_DE_CONTRATOS];
 
-// Dados que serão calculados com base nas informações que o usuário fornecer
-int custo_da_lavagem[NUMERO_DE_CONTRATOS];
-    // 1 = R$ 60, 2 = R$ 120, 3 = R$ 180
-int desconto_tipo_veiculo[NUMERO_DE_CONTRATOS];
-    // 1 = 10%, 2 = Sem desconto, 3 = 5%, 4 = 15%
-int adicional_por_tamanho[NUMERO_DE_CONTRATOS];
-    // 1 = Sem adicional, 2 = R$ 30, 3 = R$ 60
 
-int contratos_cadastrados = 0;
+void adicionar_contratos(int numero[], int tipo_de_lavagem[], int tipo_de_veiculo[], int tamanho_do_veiculo[], int frequencia[], float vlr_total[], int *contador);
+
 
 int main() {
-    // Variável que armazena opções escolhidas
-    int opcao, qntd_de_contratos;
-    // Limpa o histórico do terminal
-    system("cls");
+
+    int contador = 0, opcao;
 
     do {
         // Exibe o menu
@@ -33,7 +26,7 @@ int main() {
         printf("2. Apresentar resultados \n");
         printf("3. Ordenar os contratos pelo valor total (decrescente) \n");
         printf("4. Imprimir registros de contratos \n");
-        // Coleta a opção escolhida
+        // Coleta a opÃ§Ã£o escolhida
         scanf("%d", &opcao);
 
         switch (opcao) {
@@ -41,21 +34,13 @@ int main() {
             puts("Saindo...");
             break;
         case 1:
-            // Opção de Inserir mais contratos
+            // OpÃ§Ã£o de Inserir mais contratos
             system("cls");
             printf("ADICIONAR CONTRATOS \n");
             printf("Digite 0 para retornar ao menu. \n");
 
-            do {
-                printf("Digite a quantidade de contratos que deseja adicionar: \n");
-                scanf("%d", &qntd_de_contratos);
-                if (qntd_de_contratos > 0) {
-                    printf("Opcao invalida! \n");
-                } else if (qntd_de_contratos == 0) {
-                    printf("Retornando para o menu... \n");
-                    break;
-                }
-            } while (qntd_de_contratos < 0);
+            adicionar_contratos(numero, tipo_de_lavagem, tipo_de_veiculo, tamanho_do_veiculo, frequencia, vlr_total, &contador);
+            break;
 
         case 2:
             puts("apresente resultados");
@@ -70,9 +55,32 @@ int main() {
             puts("opcao invalida");
             break;
         }
-        // Limpa o histórico do terminal
+        // Limpa o histÃ³rico do terminal
         system("cls");
     } while (opcao!=0);
 
     return 0;
+}
+
+void adicionar_contratos(int numero[], int tipo_de_lavagem[], int tipo_de_veiculo[], int tamanho_do_veiculo[], int frequencia[], float vlr_total[], int *contador) {
+    char opcao_adc;
+    
+    do {
+    printf("\nContrato #%d\nTipo Lavagem (1-Simples, 2-Completa, 3-Premium): \n", *contador + 1);
+    scanf("%d", &tipo_de_lavagem[*contador]);
+   
+    puts("Tipo Veiculo (1-Moto, 2-Carro, 3-SUV, 4-Caminhao): ");
+    scanf("%d", &tipo_de_veiculo[*contador]);
+  
+    puts("Tamanho Veiculo (1-Pequeno, 2-Medio, 3-Grande): ");
+    scanf("%d", &tamanho_do_veiculo[*contador]);
+   
+    puts("Frequencia: ");
+    scanf("%d", &frequencia[*contador]);
+    
+    puts("Deseja continuar inserindo contrato? (s/n) ");
+    scanf(" %c", &opcao_adc);
+    
+    (*contador)++;
+    } while (opcao_adc != 'n');
 }
