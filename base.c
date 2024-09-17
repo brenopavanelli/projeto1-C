@@ -46,9 +46,9 @@ int main() {
 
         case 2:
             system("cls");
-            puts("apresente resultados");
+            puts("Insights de contrato:");
             
-            apresentar_resultado(numero, tipo_de_lavagem, tipo_de_veiculo, tamanho_do_veiculo, frequencia, vlr_total, contador);
+            apresentar_resultado(numero, tipo_de_lavagem, tipo_de_veiculo, tamanho_do_veiculo, frequencia, vlr_total, &contador);
             break;
             
         case 3:
@@ -134,8 +134,56 @@ float calcular_vlr(int tipo_de_lavagem,int tipo_de_veiculo,int tamanho_do_veicul
     return total;
 }
 
-void apresentar_resultado(int numero[], int tipo_de_lavagem[], int tipo_de_veiculo[], int tamanho_do_veiculo[], int frequencia[], float vlr_total[], int *contador){
+void apresentar_resultado(int numero[], int tipo_de_lavagem[], int tipo_de_veiculo[], int tamanho_do_veiculo[], int frequencia[], float vlr_total[], int *contador) {
+    float somaTotal = 0, somaFrequentes = 0, percentual;
+    int maiorValor = 0, contratosFrequentes = 0;
+    int totalTiposVeiculo[4] = {0, 0, 0, 0};  // Para Moto, Carro, SUV, Caminhão
+    int totalTamanhosVeiculo[3] = {0, 0, 0};  // Para Pequeno, Médio, Grande
+
+    // Calcular soma total, soma dos contratos frequentes e o contrato com maior valor
+    for (int i = 0; i < *contador; i++) {
+        somaTotal += vlr_total[i];  // Soma o valor total dos contratos
+        
+        // Verifica se o cliente é frequente (> 10 lavagens)
+        if (frequencia[i] > 10) {
+            contratosFrequentes++;
+        }
+
+        // Encontra o contrato com o maior valor
+        if (vlr_total[i] > vlr_total[maiorValor])
+            maiorValor = i;
+
+        // Conta o número de contratos por tipo de veículo
+        totalTiposVeiculo[tipo_de_veiculo[i] - 1]++;
+
+        //Conta o número de veículos lavados por tamanho (Pequeno, Médio, Grande)
+        totalTamanhosVeiculo[tamanho_do_veiculo[i] - 1]++;
+    }
+
+    //Média do valor total dos contratos
+    printf("Media Total: R$ %.2f\n", somaTotal / *contador);
+
+    //Média dos contratos para clientes frequentes (mais de 10 lavagens no mês)
+    printf("Media de clientes frequente: %d\n", contratosFrequentes );
+
+    // 3. Número do contrato com maior valor total
+    printf("Contrato com maior valor: %d\n", numero[maiorValor]);
+
+    //Percentual dos contratos para cada tipo de veículo em relação ao número total de contratos
+    printf("Percentual de contratos por tipo de veiculo:\n");
+    for (int i = 0; i < 4; i++) {
+        percentual = (totalTiposVeiculo[i] / (float)*contador) * 100;
+        printf(" - Tipo de Veiculo %d: %.2f%%\n", i + 1, percentual);
+    }
+
+    // Total de veículos lavados por tamanho (Pequeno, Médio, Grande)
+    printf("Total de veiculos lavados por tamanho:\n");
+    printf(" - Pequenos: %d\n", totalTamanhosVeiculo[0]);
+    printf(" - Medios: %d\n", totalTamanhosVeiculo[1]);
+    printf(" - Grandes: %d\n", totalTamanhosVeiculo[2]);
     
+    int teste;
+    scanf("%d", &teste);
 }
 
 
