@@ -13,7 +13,8 @@ float vlr_total[NUMERO_DE_CONTRATOS];
 
 //declarar funções
 void adicionar_contratos(int numero[], int tipo_de_lavagem[], int tipo_de_veiculo[], int tamanho_do_veiculo[], int frequencia[], float vlr_total[], int *contador);
-
+void apresentar_resultado(int numero[], int tipo_de_lavagem[], int tipo_de_veiculo[], int tamanho_do_veiculo[], int frequencia[], float vlr_total[], int *contador);
+float calcular_vlr(int tipo_de_lavagem,int tipo_de_veiculo,int tamanho_do_veiculo,int frequencia);
 
 int main() {
 
@@ -44,8 +45,12 @@ int main() {
             break;
 
         case 2:
+            system("cls");
             puts("apresente resultados");
+            
+            apresentar_resultado(numero, tipo_de_lavagem, tipo_de_veiculo, tamanho_do_veiculo, frequencia, vlr_total, contador);
             break;
+            
         case 3:
             puts("Ordene os contratos pelo valor toral");
             break;
@@ -83,6 +88,55 @@ void adicionar_contratos(int numero[], int tipo_de_lavagem[], int tipo_de_veicul
     puts("Deseja continuar inserindo contrato? (s/n) ");
     scanf(" %c", &opcao_adc);
     
+    vlr_total[*contador] = calcular_vlr(tipo_de_lavagem[*contador], tipo_de_veiculo[*contador], tamanho_do_veiculo[*contador], frequencia[*contador]);
+    
+    numero[*contador] = *contador +1 ;
+    
     (*contador)++; //Atuliza o numero do contrato
     } while (opcao_adc != 'n');
 }
+
+float calcular_vlr(int tipo_de_lavagem,int tipo_de_veiculo,int tamanho_do_veiculo,int frequencia){
+    float valor_base, total, desconto = 0, adicional = 0;
+    
+    if (tipo_de_lavagem == 1) {
+        valor_base = SIMPLES;
+    } else if (tipo_de_lavagem == 2) {
+        valor_base = COMPLETA;
+    } else {
+        valor_base = PREMIUM;
+    }
+    
+    if (tipo_de_veiculo == 1) {
+        desconto = 0.10; //moto
+    } else if (tipo_de_veiculo == 2) {
+        desconto = 0; //carro
+    } else if (tipo_de_veiculo == 3) {
+        desconto = 0.05; //suv/van
+    } else if (tipo_de_veiculo == 4) {
+        desconto = 0.15; //caminhão
+    }
+    
+    if (tamanho_do_veiculo == 2) {
+        adicional = 30.00;
+    } else if (tamanho_do_veiculo == 3) {
+        adicional = 60.00;
+    } else {
+        adicional = 0;
+    }
+    
+    
+    total = valor_base - (desconto * valor_base) - adicional;
+    if (frequencia > 10) {
+        total = total - (total * 0.10);
+    }
+    
+    return total;
+}
+
+void apresentar_resultado(int numero[], int tipo_de_lavagem[], int tipo_de_veiculo[], int tamanho_do_veiculo[], int frequencia[], float vlr_total[], int *contador){
+    
+}
+
+
+
