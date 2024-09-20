@@ -34,6 +34,7 @@ int desconto_tipo_veiculo[NUMERO_DE_CONTRATOS];
 int adicional_por_tamanho[NUMERO_DE_CONTRATOS];
     // 1 = Sem adicional, 2 = R$ 30, 3 = R$ 60
 
+int numero_do_contrato[NUMERO_DE_CONTRATOS];
 float total[NUMERO_DE_CONTRATOS];
 
 int contratos_cadastrados = 0;
@@ -131,19 +132,3 @@ void adicionar_contratos(int lavagem[], int veiculo[], int tamanho[], int freq[]
         
     }
 }
-
-
-/*
-void coletardados(int vetor[], int comprimento) {
-    for (int i=0;i<comprimento;i++) {
-        scanf("%d", &vetor[i]);
-    }
-}
-*/
-
-// void exibir_dados(int vetor[], int comprimento) {
-//     for (int i=0;i<comprimento;i++) {
-//         printf("%d", vetor[i]);
-//     }
-// }
-
