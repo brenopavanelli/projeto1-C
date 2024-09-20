@@ -69,7 +69,7 @@ void adicionar_contratos(int lavagem[], int veiculo[], int tamanho[], int freq[]
             printf("Insira o tipo de veiculo: \n");
             printf("1 - Moto \n");
             printf("2 - Carro \n");
-            printf("3 - SUV\Van \n");
+            printf("3 - SUV/Van \n");
             printf("4 - Caminhão \n");
             scanf("%d", &veiculo[i]);
         }  while (veiculo[i]!= 1 || veiculo[i]!=2 || veiculo[i]!=3 || veiculo[i]!=4);
@@ -129,6 +129,6 @@ void adicionar_contratos(int lavagem[], int veiculo[], int tamanho[], int freq[]
         total[i] = custo_da_lavagem[i] - desconto_tipo_veiculo[i] + adicional_por_tamanho[i] - desconto_frequencia;
 
         contratos_cadastrados++;
-        
-    }
+        } 
+     }
 }
