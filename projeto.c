@@ -38,6 +38,107 @@ int numero_do_contrato[NUMERO_DE_CONTRATOS];
 float total[NUMERO_DE_CONTRATOS];
 
 int contratos_cadastrados = 0;
+int retorno;
+
+void adicionar_contratos(int lavagem[], int veiculo[], int tamanho[], int freq[],int comprimento) {
+    for (int i=contratos_cadastrados;i<comprimento;i++) {
+        
+        //  Pergunta qual o tipo de lavagem até atender a regra
+        system("cls");
+        printf("Insira o tipo de lavagem: \n");
+        printf("1 - Simples \n");
+        printf("2 - Completa \n");
+        printf("3 - Premium \n");
+        scanf("%d", &lavagem[i]);
+
+        // Seleciona a opção de lavagem
+        switch (lavagem[i]) {
+            case 1:
+                custo_da_lavagem[i] = SIMPLES;
+                break;
+            case 2:
+                custo_da_lavagem[i] = COMPLETA;
+                break;
+            case 3:
+                custo_da_lavagem[i] = PREMIUM;
+                break;
+        }
+
+        //  Pergunta qual o modelo do veículo até atender a regra
+        system("cls");
+        printf("Insira o tipo de veiculo: \n");
+        printf("1 - Moto \n");
+        printf("2 - Carro \n");
+        printf("3 - SUV/Van \n");
+        printf("4 - Caminhão \n");
+        scanf("%d", &veiculo[i]);
+
+        // Seleciona a opção
+        switch (veiculo[i]) {
+        case 1:
+            desconto_tipo_veiculo[i] = (custo_da_lavagem[i] * MOTO);
+            break;
+        case 2:
+            desconto_tipo_veiculo[i] = (custo_da_lavagem[i] * CARRO);
+            break;
+        case 3:
+            desconto_tipo_veiculo[i] = (custo_da_lavagem[i] * SUVVAN);
+            break;
+        case 4:
+            desconto_tipo_veiculo[i] = (custo_da_lavagem[i] * CAMINHAO);
+            break;
+        }
+
+        //  Pergunta qual o tamanho do veículo até atender a regra
+        system("cls");
+        printf("Insira o tamanho do veiculo: \n");
+        printf("1 - Pequeno \n");
+        printf("2 - Médio \n");
+        printf("3 - Grande \n");
+        scanf("%d", &tamanho[i]);
+
+        // Seleciona a opção
+        switch (tamanho[i]) {
+            case 1:
+                adicional_por_tamanho[i] = PEQUENO;
+                break;
+            case 2:
+                adicional_por_tamanho[i] = MEDIO;
+                break;
+            case 3:
+                adicional_por_tamanho[i] = GRANDE;
+                break;
+        }
+        
+        // Solicita a frequencia
+        int desconto_frequencia;
+        system("cls");
+        printf("Insira a frequencia: \n");
+        scanf("%d", &freq[i]);
+
+        // Calcula o desconto baseado na frequencia
+        if (frequencia[i] > 10) {
+            desconto_frequencia = custo_da_lavagem[i] * FREQUENTE;
+        } else {
+            desconto_frequencia = 0;
+        }
+        
+        // Calcula o valor total
+        total[i] = custo_da_lavagem[i] - desconto_tipo_veiculo[i] + adicional_por_tamanho[i] - desconto_frequencia;
+
+        contratos_cadastrados++;
+        numero_do_contrato[i]++;
+
+        system("cls");
+        printf("Deseja continuar inserindo contratos? \n");
+        printf("Digite qualquer número para continuar ou digite 0 para retornar ao menu. \n");
+        scanf("%d", &retorno);
+
+        if (retorno==0) break;
+    } 
+}
+
+
 
 int main() {
     // Variável que armazena opções escolhidas
@@ -76,6 +177,8 @@ int main() {
                     break;
                 }
             } while (qntd_de_contratos < 0);
+
+            adicionar_contratos(tipo_de_lavagem, tipo_de_veiculo, tamanho_do_veiculo, frequencia, qntd_de_contratos);
 
         case 2:
             puts("apresente resultados");
