@@ -64,7 +64,7 @@ void adicionar_contratos(int lavagem[], int veiculo[], int tamanho[], int freq[]
             printf("1 - Moto \n");
             printf("2 - Carro \n");
             printf("3 - SUV/Van \n");
-            printf("4 - Caminhão \n");
+            printf("4 - Caminhao \n");
             scanf("%d", &veiculo[i]);
             if (veiculo[i] < 1 || veiculo[i] > 4) {
                 printf("Opcao invalida! Tente novamente.\n");
@@ -82,7 +82,7 @@ void adicionar_contratos(int lavagem[], int veiculo[], int tamanho[], int freq[]
             system("cls");
             printf("Insira o tamanho do veiculo: \n");
             printf("1 - Pequeno \n");
-            printf("2 - Médio \n");
+            printf("2 - Medio \n");
             printf("3 - Grande \n");
             scanf("%d", &tamanho[i]);
             if (tamanho[i] < 1 || tamanho[i] > 3) {
@@ -114,7 +114,7 @@ void adicionar_contratos(int lavagem[], int veiculo[], int tamanho[], int freq[]
 
         system("cls");
         printf("Deseja continuar inserindo contratos? \n");
-        printf("Digite qualquer número para continuar ou digite 0 para retornar ao menu. \n");
+        printf("Digite qualquer numero para continuar ou digite 0 para retornar ao menu. \n");
         scanf("%d", &retorno);
 
         if (retorno == 0) break;
