@@ -28,23 +28,19 @@ int frequencia[NUMERO_DE_CONTRATOS]; // Naior que 10 = Frequente (10% de descont
 
 // Dados que serão calculados com base nas informações que o usuário fornecer
 int custo_da_lavagem[NUMERO_DE_CONTRATOS];
-    // 1 = R$ 60, 2 = R$ 120, 3 = R$ 180
 int desconto_tipo_veiculo[NUMERO_DE_CONTRATOS];
-    // 1 = 10%, 2 = Sem desconto, 3 = 5%, 4 = 15%
 int adicional_por_tamanho[NUMERO_DE_CONTRATOS];
-    // 1 = Sem adicional, 2 = R$ 30, 3 = R$ 60
-
 int numero_do_contrato[NUMERO_DE_CONTRATOS];
 float total[NUMERO_DE_CONTRATOS];
 
 int contratos_cadastrados = 0;
 int retorno;
 
+// Função para adicionar contratos
 void adicionar_contratos(int lavagem[], int veiculo[], int tamanho[], int freq[], int comprimento) {
     for (int i = contratos_cadastrados; i < comprimento; i++) {
         system("cls");
         
-        // Pergunta qual o tipo de lavagem até atender a regra
         do {
             printf("Insira o tipo de lavagem: \n");
             printf("1 - Simples \n");
@@ -62,7 +58,6 @@ void adicionar_contratos(int lavagem[], int veiculo[], int tamanho[], int freq[]
             case 3: custo_da_lavagem[i] = PREMIUM; break;
         }
 
-        // Pergunta qual o modelo do veículo até atender a regra
         do {
             system("cls");
             printf("Insira o tipo de veiculo: \n");
@@ -83,7 +78,6 @@ void adicionar_contratos(int lavagem[], int veiculo[], int tamanho[], int freq[]
             case 4: desconto_tipo_veiculo[i] = custo_da_lavagem[i] * CAMINHAO; break;
         }
 
-        // Pergunta qual o tamanho do veículo até atender a regra
         do {
             system("cls");
             printf("Insira o tamanho do veiculo: \n");
@@ -102,7 +96,6 @@ void adicionar_contratos(int lavagem[], int veiculo[], int tamanho[], int freq[]
             case 3: adicional_por_tamanho[i] = GRANDE; break;
         }
 
-        // Solicita a frequencia
         do {
             system("cls");
             printf("Insira a frequencia (número de lavagens): \n");
@@ -128,114 +121,126 @@ void adicionar_contratos(int lavagem[], int veiculo[], int tamanho[], int freq[]
     }
 }
 
-// Recebe: total de contratos, Vetor de tipos de veiculo, vetor de tamanho,
-// vetor de numero do contrato
+// Função para apresentar os resultados
 void apresentar_resultados(int contratos, int tipoV[], int tamanho[], int numero[]) {
     float soma_total = 0, soma_frequentes = 0, percentual;
     int maior_valor = 0, contratos_frequentes = 0;
-    int total_tipos_veiculo[4] = {0, 0, 0, 0};  // Para Moto, Carro, SUV, Caminhão
-    int total_tamanhos_veiculo[3] = {0, 0, 0};  // Para Pequeno, Médio, Grande
+    int total_tipos_veiculo[4] = {0, 0, 0, 0};
+    int total_tamanhos_veiculo[3] = {0, 0, 0};
     
     for (int i = 0; i < contratos; i++) {
-        // Soma o valor total dos contratos
         soma_total += total[i]; 
 
-         // Verifica se o cliente é frequente (> 10 lavagens)
         if (frequencia[i] > 10) {
             contratos_frequentes++;
             soma_frequentes += total[i];
         }
 
-         // Encontra o contrato com o maior valor
         if (total[i] > total[maior_valor]) 
             maior_valor = i;
 
-        // Conta o número de contratos por tipo de veículo
         total_tipos_veiculo[tipoV[i] - 1]++;
-
-        // Conta o número de veículos lavados por tamanho (Pequeno, Médio, Grande)
         total_tamanhos_veiculo[tamanho[i] - 1]++;
     }
 
-    // Média do valor total dos contratos
     printf("Media Total: R$ %.2f\n", soma_total / contratos);
 
-    // Média dos contratos para clientes frequentes (mais de 10 lavagens no mês)
-    printf("Media de clientes frequente: %d\n", soma_frequentes / contratos_frequentes );
+    if (contratos_frequentes > 0) {
+        printf("Media de clientes frequente: %.2f\n", soma_frequentes / contratos_frequentes);
+    } else {
+        printf("Nenhum cliente frequente.\n");
+    }
 
-    // Número do contrato com maior valor total
-    printf("Contrato com maior valor: %d\n", numero[maior_valor]);
+    printf("Contrato com maior valor: %d - Valor: R$ %.2f\n", numero[maior_valor], total[maior_valor]);
 
     printf("Percentual de contratos por tipo de veiculo:\n");
     for (int i = 0; i < 4; i++) {
-        percentual = (total_tipos_veiculo[i] / contratos) * 100;
+        percentual = ((float)total_tipos_veiculo[i] / contratos) * 100;
         printf(" - Tipo de Veiculo %d: %.2f%%\n", i + 1, percentual);
     }
 
-    // Total de veículos lavados por tamanho (Pequeno, Médio, Grande)
     printf("Total de veiculos lavados por tamanho:\n");
     printf(" - Pequenos: %d\n", total_tamanhos_veiculo[0]);
     printf(" - Medios: %d\n", total_tamanhos_veiculo[1]);
     printf(" - Grandes: %d\n", total_tamanhos_veiculo[2]);
 }
 
+// Função para ordenar os contratos por valor total (decrescente)
+void ordenar_contratos(int contratos) {
+    for (int i = 0; i < contratos - 1; i++) {
+        for (int j = 0; j < contratos - i - 1; j++) {
+            if (total[j] < total[j + 1]) {
+                // Troca o valor total
+                float temp_total = total[j];
+                total[j] = total[j + 1];
+                total[j + 1] = temp_total;
 
+                // Troca os tipos de lavagem, veículos, tamanhos e números de contrato
+                int temp_lavagem = tipo_de_lavagem[j];
+                tipo_de_lavagem[j] = tipo_de_lavagem[j + 1];
+                tipo_de_lavagem[j + 1] = temp_lavagem;
+
+                int temp_veiculo = tipo_de_veiculo[j];
+                tipo_de_veiculo[j] = tipo_de_veiculo[j + 1];
+                tipo_de_veiculo[j + 1] = temp_veiculo;
+
+                int temp_tamanho = tamanho_do_veiculo[j];
+                tamanho_do_veiculo[j] = tamanho_do_veiculo[j + 1];
+                tamanho_do_veiculo[j + 1] = temp_tamanho;
+
+                int temp_numero = numero_do_contrato[j];
+                numero_do_contrato[j] = numero_do_contrato[j + 1];
+                numero_do_contrato[j + 1] = temp_numero;
+            }
+        }
+    }
+
+    printf("Contratos ordenados com sucesso!\n");
+}
+
+// Função para imprimir os contratos cadastrados
+void imprimir_contratos(int contratos) {
+    printf("Contratos cadastrados:\n");
+    for (int i = 0; i < contratos; i++) {
+        printf("Contrato %d: Tipo de Lavagem: %d, Tipo de Veículo: %d, Tamanho: %d, Total: R$ %.2f\n",
+               numero_do_contrato[i], tipo_de_lavagem[i], tipo_de_veiculo[i], tamanho_do_veiculo[i], total[i]);
+    }
+}
+
+// Função principal com o menu de opções
 int main() {
-    // Variável que armazena opções escolhidas
-    int opcao, qntd_de_contratos;
-    // Limpa o histórico do terminal
-    system("cls");
-
+    int opcao;
     do {
-        // Exibe o menu
-        printf("Escolha uma opcao: \n");
-        printf("0. Sair \n");
-        printf("1. Inserir mais contratos \n");
-        printf("2. Apresentar resultados \n");
-        printf("3. Ordenar os contratos pelo valor total (decrescente) \n");
-        printf("4. Imprimir registros de contratos \n");
-        // Coleta a opção escolhida
+        printf("\n--- Menu ---\n");
+        printf("1 - Adicionar contrato\n");
+        printf("2 - Apresentar resultado\n");
+        printf("3 - Ordenar contratos por valor total\n");
+        printf("4 - Imprimir contratos\n");
+        printf("0 - Sair\n");
+        printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
 
         switch (opcao) {
-        case 0:
-            puts("Saindo...");
-            break;
-        case 1: 
-            // Opção de Inserir mais contratos
-            system("cls");
-            printf("ADICIONAR CONTRATOS \n");
-            printf("Digite 0 para retornar ao menu. \n");
-
-            do {
-                printf("Digite a quantidade de contratos que deseja adicionar: \n");
-                scanf("%d", &qntd_de_contratos);
-                if (qntd_de_contratos > 0) {
-                    printf("Opcao invalida! \n");
-                } else if (qntd_de_contratos == 0) {
-                    printf("Retornando para o menu... \n");
-                    break;
-                }
-            } while (qntd_de_contratos < 0);
-
-            adicionar_contratos(tipo_de_lavagem, tipo_de_veiculo, tamanho_do_veiculo, frequencia, qntd_de_contratos);
-
-        case 2:
-            apresentar_resultados(contratos_cadastrados, tipo_de_veiculo, tamanho_do_veiculo, numero_do_contrato);
-            break;
-        case 3:
-            puts("Ordene os contratos pelo valor toral");
-            break;
-        case 4:
-            puts("Imprima os registros");
-            break;
-        default:
-            puts("opcao invalida");
-            break;
+            case 1:
+                adicionar_contratos(tipo_de_lavagem, tipo_de_veiculo, tamanho_do_veiculo, frequencia, NUMERO_DE_CONTRATOS);
+                break;
+            case 2:
+                apresentar_resultados(contratos_cadastrados, tipo_de_veiculo, tamanho_do_veiculo, numero_do_contrato);
+                break;
+            case 3:
+                ordenar_contratos(contratos_cadastrados);
+                break;
+            case 4:
+                imprimir_contratos(contratos_cadastrados);
+                break;
+            case 0:
+                printf("Saindo...\n");
+                break;
+            default:
+                printf("Opcao invalida! Tente novamente.\n");
+                break;
         }
-        // Limpa o histórico do terminal
-        // system("cls");
-    } while (opcao!=0);
+    } while (opcao != 0);
 
     return 0;
 }
