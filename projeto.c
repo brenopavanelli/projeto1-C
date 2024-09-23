@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 int contador;
-#define NUMERO_DE_CONTRATOS 10
+#define NUMERO_DE_CONTRATOS 100
 
 // Define os preços fixos 
 #define SIMPLES 60.0
